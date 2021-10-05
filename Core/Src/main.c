@@ -143,6 +143,7 @@ int main(void)
 	  racine = creerRacine(arbreHuffman, tailleTableauHuffman);
 
 	  parcourirArbre(racine);
+	  free(arbreHuffman);
 
 	  printf("\n\nDELAY");
 	  HAL_Delay(50000000);

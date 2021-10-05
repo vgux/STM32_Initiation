@@ -28754,6 +28754,7 @@ int main(void)
    racine = creerRacine(arbreHuffman, tailleTableauHuffman);
 
    parcourirArbre(racine);
+   free(arbreHuffman);
 
    printf("\n\nDELAY");
    HAL_Delay(50000000);
@@ -28815,7 +28816,7 @@ void SystemClock_Config(void)
 
 static void MX_USART2_UART_Init(void)
 {
-# 215 "../Core/Src/main.c"
+# 216 "../Core/Src/main.c"
   huart2.Instance = ((USART_TypeDef *) (0x40000000UL + 0x4400UL));
   huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = 0x00000000U;
