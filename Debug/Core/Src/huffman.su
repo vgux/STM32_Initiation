@@ -1,0 +1,5 @@
+huffman.c:16:10:creerFeuille	32	static
+huffman.c:34:6:printFeuille	16	static
+huffman.c:48:6:afficherTabArbreHuffman	40	static
+huffman.c:58:6:triArbre	24	static
+huffman.c:71:15:creerRacine	32	static
