@@ -4,3 +4,4 @@ huffman.c:48:6:afficherTabArbreHuffman	40	static
 huffman.c:58:6:triArbre	24	static
 huffman.c:71:15:creerRacine	32	static
 huffman.c:88:6:parcourirArbre	16	static
+huffman.c:103:6:creerCode	24	static

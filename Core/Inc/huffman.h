@@ -29,3 +29,4 @@ void afficherTabArbreHuffman (struct noeud* arbre[256], uint32_t taille);
 void triArbre(struct noeud* arbre[256], uint32_t taille);
 struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille);
 void parcourirArbre(struct noeud* ptrNoeud);
+void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille);

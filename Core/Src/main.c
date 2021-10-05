@@ -142,11 +142,16 @@ int main(void)
 	  afficherTabArbreHuffman (arbreHuffman, tailleTableauHuffman);
 	  racine = creerRacine(arbreHuffman, tailleTableauHuffman);
 
+	  printf("\nParcours arbre : Affichage caractere et occurence\n");
 	  parcourirArbre(racine);
-	  free(arbreHuffman);
+	  //free(arbreHuffman); // a corriger 2.3.6
+
+	  creerCode(racine, 0, 1);
+
+
 
 	  printf("\n\nDELAY");
-	  HAL_Delay(50000000);
+	  HAL_Delay(500000);
 
     /* USER CODE BEGIN 3 */
   }

@@ -99,3 +99,20 @@ void parcourirArbre(struct noeud* ptrNoeud) {
 		}
 	}
 }
+
+void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
+	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
+		ptrNoeud->tailleCode = taille;
+		ptrNoeud->code = code;
+		printf("\n%c \t code : %d \t taille : %d \r\n", ptrNoeud->c, ptrNoeud->code, ptrNoeud->tailleCode);
+	}
+	else {
+		if(ptrNoeud->gauche) {
+			creerCode(ptrNoeud->gauche, (code<<1)+1, taille+1);
+		}
+
+		if(ptrNoeud->droite) {
+			creerCode(ptrNoeud->droite, code<<1, taille+1);
+		}
+	}
+}
