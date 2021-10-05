@@ -75,7 +75,7 @@ struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille) {
 
 	for(i = 1; i < taille; i++) {
 		adresseNoeud = (struct noeud*) malloc(sizeof(struct noeud));
-		adresseNoeud->c = '!';
+		adresseNoeud->c = 0;
 		adresseNoeud->occurence = adresseNoeudPrecedent->occurence + arbre[i]->occurence;
 		adresseNoeud->gauche = adresseNoeudPrecedent;
 		adresseNoeud->droite = arbre[i];
@@ -83,4 +83,19 @@ struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille) {
 	}
 
 	return(adresseNoeud); //retourne l'adresse de la racine
+}
+
+void parcourirArbre(struct noeud* ptrNoeud) {
+	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
+		printf("\n%c -> %u", ptrNoeud->c, ptrNoeud->occurence);
+	}
+	else {
+		if(ptrNoeud->gauche) {
+			parcourirArbre(ptrNoeud->gauche);
+		}
+
+		if(ptrNoeud->droite) {
+			parcourirArbre(ptrNoeud->droite);
+		}
+	}
 }

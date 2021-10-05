@@ -140,12 +140,11 @@ int main(void)
 	  tailleTableauHuffman = creerFeuille(arbreHuffman, tabCaractere);
 	  triArbre(arbreHuffman, tailleTableauHuffman);
 	  afficherTabArbreHuffman (arbreHuffman, tailleTableauHuffman);
-	  printf("RACINE %u\n", racine);
 	  racine = creerRacine(arbreHuffman, tailleTableauHuffman);
 
-	  printf("@GAUCHE : %c & Char droite = %c", racine->gauche->gauche->gauche->c, racine->droite->c);
-	  printf("RACINE %u\n", racine);
+	  parcourirArbre(racine);
 
+	  printf("\n\nDELAY");
 	  HAL_Delay(50000000);
 
     /* USER CODE BEGIN 3 */
