@@ -28747,15 +28747,7 @@ int main(void)
 
   MX_GPIO_Init();
   MX_USART2_UART_Init();
-
-
-
-
-
-
-  while (1)
-  {
-# 142 "../Core/Src/main.c"
+# 119 "../Core/Src/main.c"
    occurence(texte, tabCaractere);
    occurencePrint(texte, tabCaractere);
 
@@ -28784,13 +28776,10 @@ int main(void)
    printf("\nTaille texte compresse = %d", tailleTexteCompresse);
 
    generateurEntete(tabEntete, racine, tailleTexteCompresse, nbrCaractereTotal, tabCaractere);
-
-
-
-   printf("\n\nDELAY");
-   HAL_Delay(5000000);
-
-
+# 156 "../Core/Src/main.c"
+  while (1)
+  {
+# 180 "../Core/Src/main.c"
   }
 
 }
@@ -28847,7 +28836,7 @@ void SystemClock_Config(void)
 
 static void MX_USART2_UART_Init(void)
 {
-# 241 "../Core/Src/main.c"
+# 244 "../Core/Src/main.c"
   huart2.Instance = ((USART_TypeDef *) (0x40000000UL + 0x4400UL));
   huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = 0x00000000U;

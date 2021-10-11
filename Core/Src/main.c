@@ -108,36 +108,13 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-	  /*****************************************************************************************
-	   * 									Partie 1 TP										   *
-	   *****************************************************************************************/
 
 
-	  /*ledBlinker();
-
-	  uint8_t str[15];
-
-	  uint32_t i = 888;
-	  sprintf(str, "%d\n", i);
-	  myPrintf(str);
-
-	  printf(str);
-
-	  varSizePrint();
-	  pointerIncrementPrint();*/
 
 
-	  /*****************************************************************************************
-	   * 									Partie 2 TP										   *
-	   *****************************************************************************************/
+  /*****************************************************************************************
+   * 									Partie 2 TP										   *
+   *****************************************************************************************/
 
 	  occurence(texte, tabCaractere);
 	  occurencePrint(texte, tabCaractere);
@@ -170,8 +147,33 @@ int main(void)
 
 
 
-	  printf("\n\nDELAY");
-	  HAL_Delay(5000000);
+
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  while (1)
+  {
+    /* USER CODE END WHILE */
+
+	  /*****************************************************************************************
+	   * 									Partie 1 TP										   *
+	   *****************************************************************************************/
+
+	  /*ledBlinker();
+
+	  uint8_t str[15];
+
+	  uint32_t i = 888;
+	  sprintf(str, "%d\n", i);
+	  myPrintf(str);
+
+	  printf(str);
+
+	  varSizePrint();
+	  pointerIncrementPrint();*/
+
 
     /* USER CODE BEGIN 3 */
   }
