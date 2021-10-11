@@ -77,7 +77,7 @@ int main(void)
   struct noeud* arbreHuffman[256];
   struct noeud* racine;
   uint8_t 	texte[]="aaaabbbccd";
-  //uint8_t 	texteCompress[TAILLE_MAX_COMPRESS];
+  uint8_t 	texteCompress[TAILLE_MAX_COMPRESS] = {0};
   uint32_t 	tabCaractere[256] = {0};
   uint32_t	nbrCaractereTotal = 0;
   uint32_t	nbrCaractereDifferent = 0;
@@ -113,26 +113,29 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  /*
-	   * Partie 1 TP
-	   */
 
-	  //ledBlinker();
+	  /*****************************************************************************************
+	   * 									Partie 1 TP										   *
+	   *****************************************************************************************/
 
-	  //uint8_t str[15];
 
-	  //uint32_t i = 888;
-	  //sprintf(str, "%d\n", i);
-	  //myPrintf(str);
+	  /*ledBlinker();
 
-	  //printf(str);
+	  uint8_t str[15];
 
-	  //varSizePrint();
-	  //pointerIncrementPrint();
+	  uint32_t i = 888;
+	  sprintf(str, "%d\n", i);
+	  myPrintf(str);
 
-	  /*
-	   * Partie 2 TP
-	   */
+	  printf(str);
+
+	  varSizePrint();
+	  pointerIncrementPrint();*/
+
+
+	  /*****************************************************************************************
+	   * 									Partie 2 TP										   *
+	   *****************************************************************************************/
 
 	  occurence(texte, tabCaractere);
 	  occurencePrint(texte, tabCaractere);
@@ -149,9 +152,12 @@ int main(void)
 	  parcourirArbre(racine);
 	  //free(arbreHuffman); // a corriger 2.3.6
 
+	  printf("\n");
 	  creerCode(racine, 0, 0);
 
+	  uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
 
+	  printf("\nTaille texte compresse = %d", tailleTexteCompresse);
 
 	  printf("\n\nDELAY");
 	  HAL_Delay(500000);

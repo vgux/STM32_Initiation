@@ -124,7 +124,7 @@ void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
 		ptrNoeud->tailleCode = taille;
 		ptrNoeud->code = code;
-		printf("\n%c \t code : %d \t taille : %d \r\n", ptrNoeud->c, ptrNoeud->code, ptrNoeud->tailleCode);
+		printf("%c \t code : %d \t taille : %d\n", ptrNoeud->c, ptrNoeud->code, ptrNoeud->tailleCode);
 	}
 	else {
 		if(ptrNoeud->gauche) {
@@ -136,6 +136,73 @@ void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 		}
 	}
 }
+
+struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere) {
+	struct noeud* adresseNoeud = 0;
+
+	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
+		if(ptrNoeud->c == caractere) {
+			return ptrNoeud;
+		} else {
+			return NULL;
+		}
+	}
+	else {
+		if(ptrNoeud->gauche) {
+			adresseNoeud = getAdress(ptrNoeud->gauche, caractere);
+			if(adresseNoeud) {
+				return(adresseNoeud);
+			}
+		}
+
+		if(ptrNoeud->droite) {
+			adresseNoeud = getAdress(ptrNoeud->droite, caractere);
+			if(adresseNoeud) {
+				return(adresseNoeud);
+			}
+		}
+	}
+}
+
+uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t compressedText[256]) {
+
+	uint16_t caseTableauCompress = 0, tailleCompresse = 0, i = 0;
+	int8_t numeroBitDansTableauCompress = 7;
+	struct noeud* adresseCaractere = 0;
+	while(texte[i] != 0) {
+		adresseCaractere = getAdress(ptrNoeud, texte[i]);
+		tailleCompresse += adresseCaractere->tailleCode;
+		printf("%c", texte[i]);
+
+		for(int16_t j = (adresseCaractere->tailleCode)-1; j >= 0; j--) {
+			uint8_t codeDecale = (adresseCaractere->code >> j) & 1;
+
+			//printf("\n%c : code %d >> %d\n\n", adresseCaractere->c, adresseCaractere->code, j);
+
+			if(codeDecale) {
+				compressedText[caseTableauCompress] |= 1 << numeroBitDansTableauCompress;
+			}
+			else {
+				compressedText[caseTableauCompress] &= ~(1 << numeroBitDansTableauCompress);
+			}
+
+			numeroBitDansTableauCompress--;
+
+			if(numeroBitDansTableauCompress < 0) {
+				numeroBitDansTableauCompress = 7;
+				caseTableauCompress++;
+			}
+		}
+		i++;
+	}
+	printf("\nContenu compresse : %d, %d, %d\n", compressedText[0], compressedText[1], compressedText[2]);
+
+	return tailleCompresse;
+}
+
+/************************
+ * Fonctions privees	*
+ ************************/
 
 static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille) {
 	uint16_t i = 0;

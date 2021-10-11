@@ -28648,6 +28648,9 @@ void triArbre(struct noeud* arbre[256], uint32_t taille);
 struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille);
 void parcourirArbre(struct noeud* ptrNoeud);
 void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille);
+struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere);
+uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t compressedText[256]);
+
 static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille);
 # 42 "../Core/Inc/main.h" 2
 # 60 "../Core/Inc/main.h"
@@ -28672,6 +28675,8 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
+
+#define TAILLE_MAX_COMPRESS 256
 # 22 "../Core/Src/main.c" 2
 # 43 "../Core/Src/main.c"
 UART_HandleTypeDef huart2;
@@ -28711,7 +28716,7 @@ int main(void)
   struct noeud* arbreHuffman[256];
   struct noeud* racine;
   uint8_t texte[]="aaaabbbccd";
-
+  uint8_t texteCompress[256] = {0};
   uint32_t tabCaractere[256] = {0};
   uint32_t nbrCaractereTotal = 0;
   uint32_t nbrCaractereDifferent = 0;
@@ -28746,7 +28751,7 @@ int main(void)
 
   while (1)
   {
-# 137 "../Core/Src/main.c"
+# 140 "../Core/Src/main.c"
    occurence(texte, tabCaractere);
    occurencePrint(texte, tabCaractere);
 
@@ -28762,9 +28767,12 @@ int main(void)
    parcourirArbre(racine);
 
 
+   printf("\n");
    creerCode(racine, 0, 0);
 
+   uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
 
+   printf("\nTaille texte compresse = %d", tailleTexteCompresse);
 
    printf("\n\nDELAY");
    HAL_Delay(500000);
@@ -28826,7 +28834,7 @@ void SystemClock_Config(void)
 
 static void MX_USART2_UART_Init(void)
 {
-# 224 "../Core/Src/main.c"
+# 230 "../Core/Src/main.c"
   huart2.Instance = ((USART_TypeDef *) (0x40000000UL + 0x4400UL));
   huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = 0x00000000U;
