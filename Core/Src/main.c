@@ -135,19 +135,18 @@ int main(void)
 	  creerCode(racine, 0, 0);
 
 	  nbrCaractereTotal = strlen((unsigned char*) texte);
-	  printf("\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
+	  printf("\n\n\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
 
 	  nbrCaractereDifferent = obtenirNbCarDifferent(tabCaractere);
 	  printf("\nnbrCaractereDifferent = %d\n", nbrCaractereDifferent);
 
 	  uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
-	  printf("\nTaille texte compresse = %d", tailleTexteCompresse);
+	  printf("\nTaille texte compresse = %d\n\n", tailleTexteCompresse);
 
 	  generateurEntete(tabEntete, racine, tailleTexteCompresse, nbrCaractereTotal, tabCaractere);
 
 
-
-
+	  //HAL_UART_Receive_IT(&huart2, pData, Size);
 
   /* USER CODE END 2 */
 

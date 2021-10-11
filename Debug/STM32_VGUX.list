@@ -1676,7 +1676,7 @@ int main(void)
  8000dac:	4618      	mov	r0, r3
  8000dae:	f7ff fa2f 	bl	8000210 <strlen>
  8000db2:	f8c7 0a1c 	str.w	r0, [r7, #2588]	; 0xa1c
-	  printf("\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
+	  printf("\n\n\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
  8000db6:	f8d7 1a1c 	ldr.w	r1, [r7, #2588]	; 0xa1c
  8000dba:	481b      	ldr	r0, [pc, #108]	; (8000e28 <main+0x180>)
  8000dbc:	f002 f8e0 	bl	8002f80 <iprintf>
@@ -1700,7 +1700,7 @@ int main(void)
  8000de8:	f7ff fdc2 	bl	8000970 <textCompressor>
  8000dec:	4603      	mov	r3, r0
  8000dee:	f8a7 3a0e 	strh.w	r3, [r7, #2574]	; 0xa0e
-	  printf("\nTaille texte compresse = %d", tailleTexteCompresse);
+	  printf("\nTaille texte compresse = %d\n\n", tailleTexteCompresse);
  8000df2:	f8b7 3a0e 	ldrh.w	r3, [r7, #2574]	; 0xa0e
  8000df6:	4619      	mov	r1, r3
  8000df8:	480d      	ldr	r0, [pc, #52]	; (8000e30 <main+0x188>)
@@ -2137,7 +2137,7 @@ void occurencePrint(uint8_t* chaine, uint32_t tab[256]) {
 	  printf("+-------+-------+\n");
  8001098:	4812      	ldr	r0, [pc, #72]	; (80010e4 <occurencePrint+0x5c>)
  800109a:	f001 fff9 	bl	8003090 <puts>
-	  printf("| Car \t* Occ\t|\n");
+	  printf("| Car \t| Occ\t|\n");
  800109e:	4812      	ldr	r0, [pc, #72]	; (80010e8 <occurencePrint+0x60>)
  80010a0:	f001 fff6 	bl	8003090 <puts>
 	  printf("+-------+-------+\n");

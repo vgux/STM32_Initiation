@@ -28767,19 +28767,19 @@ int main(void)
    creerCode(racine, 0, 0);
 
    nbrCaractereTotal = strlen((unsigned char*) texte);
-   printf("\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
+   printf("\n\n\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
 
    nbrCaractereDifferent = obtenirNbCarDifferent(tabCaractere);
    printf("\nnbrCaractereDifferent = %d\n", nbrCaractereDifferent);
 
    uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
-   printf("\nTaille texte compresse = %d", tailleTexteCompresse);
+   printf("\nTaille texte compresse = %d\n\n", tailleTexteCompresse);
 
    generateurEntete(tabEntete, racine, tailleTexteCompresse, nbrCaractereTotal, tabCaractere);
-# 156 "../Core/Src/main.c"
+# 155 "../Core/Src/main.c"
   while (1)
   {
-# 180 "../Core/Src/main.c"
+# 178 "../Core/Src/main.c"
   }
 
 }
@@ -28836,7 +28836,7 @@ void SystemClock_Config(void)
 
 static void MX_USART2_UART_Init(void)
 {
-# 244 "../Core/Src/main.c"
+# 242 "../Core/Src/main.c"
   huart2.Instance = ((USART_TypeDef *) (0x40000000UL + 0x4400UL));
   huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = 0x00000000U;
