@@ -32,5 +32,6 @@ void parcourirArbre(struct noeud* ptrNoeud);
 void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille);
 struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere);
 uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t compressedText[256]);
+void generateurEntete(uint8_t tabEntete[256], struct noeud* racine, uint16_t tailleFichierCompresse, uint8_t nbrCaractereTotal, uint32_t tabOccurence[256]);
 
 static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille);

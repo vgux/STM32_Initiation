@@ -82,6 +82,8 @@ int main(void)
   uint32_t	nbrCaractereTotal = 0;
   uint32_t	nbrCaractereDifferent = 0;
 
+  uint8_t tabEntete[256] = {0};
+
   uint16_t tailleTableauHuffman = 0;
   /* USER CODE END 1 */
 
@@ -155,12 +157,21 @@ int main(void)
 	  printf("\n");
 	  creerCode(racine, 0, 0);
 
-	  uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
+	  nbrCaractereTotal = strlen((unsigned char*) texte);
+	  printf("\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
 
+	  nbrCaractereDifferent = obtenirNbCarDifferent(tabCaractere);
+	  printf("\nnbrCaractereDifferent = %d\n", nbrCaractereDifferent);
+
+	  uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
 	  printf("\nTaille texte compresse = %d", tailleTexteCompresse);
 
+	  generateurEntete(tabEntete, racine, tailleTexteCompresse, nbrCaractereTotal, tabCaractere);
+
+
+
 	  printf("\n\nDELAY");
-	  HAL_Delay(500000);
+	  HAL_Delay(5000000);
 
     /* USER CODE BEGIN 3 */
   }

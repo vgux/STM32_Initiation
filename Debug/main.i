@@ -28628,6 +28628,7 @@ void myPrintf(uint8_t * text);
 
 void occurence(uint8_t* chaine, uint32_t tab[256]);
 void occurencePrint(uint8_t* chaine, uint32_t tab[256]);
+uint16_t obtenirNbCarDifferent(uint32_t tab[256]);
 # 41 "../Core/Inc/main.h" 2
 # 1 "../Core/Inc/huffman.h" 1
 # 9 "../Core/Inc/huffman.h"
@@ -28650,6 +28651,7 @@ void parcourirArbre(struct noeud* ptrNoeud);
 void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille);
 struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere);
 uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t compressedText[256]);
+void generateurEntete(uint8_t tabEntete[256], struct noeud* racine, uint16_t tailleFichierCompresse, uint8_t nbrCaractereTotal, uint32_t tabOccurence[256]);
 
 static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille);
 # 42 "../Core/Inc/main.h" 2
@@ -28721,6 +28723,8 @@ int main(void)
   uint32_t nbrCaractereTotal = 0;
   uint32_t nbrCaractereDifferent = 0;
 
+  uint8_t tabEntete[256] = {0};
+
   uint16_t tailleTableauHuffman = 0;
 
 
@@ -28751,7 +28755,7 @@ int main(void)
 
   while (1)
   {
-# 140 "../Core/Src/main.c"
+# 142 "../Core/Src/main.c"
    occurence(texte, tabCaractere);
    occurencePrint(texte, tabCaractere);
 
@@ -28770,12 +28774,21 @@ int main(void)
    printf("\n");
    creerCode(racine, 0, 0);
 
-   uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
+   nbrCaractereTotal = strlen((unsigned char*) texte);
+   printf("\nnbrCaractereTotal = %d\n", nbrCaractereTotal);
 
+   nbrCaractereDifferent = obtenirNbCarDifferent(tabCaractere);
+   printf("\nnbrCaractereDifferent = %d\n", nbrCaractereDifferent);
+
+   uint16_t tailleTexteCompresse = textCompressor(racine, texte, texteCompress);
    printf("\nTaille texte compresse = %d", tailleTexteCompresse);
 
+   generateurEntete(tabEntete, racine, tailleTexteCompresse, nbrCaractereTotal, tabCaractere);
+
+
+
    printf("\n\nDELAY");
-   HAL_Delay(500000);
+   HAL_Delay(5000000);
 
 
   }
@@ -28834,7 +28847,7 @@ void SystemClock_Config(void)
 
 static void MX_USART2_UART_Init(void)
 {
-# 230 "../Core/Src/main.c"
+# 241 "../Core/Src/main.c"
   huart2.Instance = ((USART_TypeDef *) (0x40000000UL + 0x4400UL));
   huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = 0x00000000U;

@@ -108,8 +108,7 @@ struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille) {
 void parcourirArbre(struct noeud* ptrNoeud) {
 	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
 		printf("\n%c -> %u", ptrNoeud->c, ptrNoeud->occurence);
-	}
-	else {
+	} else {
 		if(ptrNoeud->gauche) {
 			parcourirArbre(ptrNoeud->gauche);
 		}
@@ -125,8 +124,8 @@ void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 		ptrNoeud->tailleCode = taille;
 		ptrNoeud->code = code;
 		printf("%c \t code : %d \t taille : %d\n", ptrNoeud->c, ptrNoeud->code, ptrNoeud->tailleCode);
-	}
-	else {
+
+	} else {
 		if(ptrNoeud->gauche) {
 			creerCode(ptrNoeud->gauche, (code<<1)+1, taille+1);
 		}
@@ -146,8 +145,7 @@ struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere) {
 		} else {
 			return NULL;
 		}
-	}
-	else {
+	} else {
 		if(ptrNoeud->gauche) {
 			adresseNoeud = getAdress(ptrNoeud->gauche, caractere);
 			if(adresseNoeud) {
@@ -167,7 +165,7 @@ struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere) {
 uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t compressedText[256]) {
 
 	uint16_t caseTableauCompress = 0, tailleCompresse = 0, i = 0;
-	int8_t numeroBitDansTableauCompress = 7;
+	int8_t numeroBitDansCaseTableauCompress = 7;
 	struct noeud* adresseCaractere = 0;
 	while(texte[i] != 0) {
 		adresseCaractere = getAdress(ptrNoeud, texte[i]);
@@ -175,21 +173,21 @@ uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t comp
 		printf("%c", texte[i]);
 
 		for(int16_t j = (adresseCaractere->tailleCode)-1; j >= 0; j--) {
-			uint8_t codeDecale = (adresseCaractere->code >> j) & 1;
+			uint8_t codeDecale = (adresseCaractere->code >> j) & 1; //codeDecale vaut 0 ou 1
 
 			//printf("\n%c : code %d >> %d\n\n", adresseCaractere->c, adresseCaractere->code, j);
 
+			// insertion de 0 ou de 1 a la suite du texte compresse
 			if(codeDecale) {
-				compressedText[caseTableauCompress] |= 1 << numeroBitDansTableauCompress;
-			}
-			else {
-				compressedText[caseTableauCompress] &= ~(1 << numeroBitDansTableauCompress);
+				compressedText[caseTableauCompress] |= 1 << numeroBitDansCaseTableauCompress;
+			} else {
+				compressedText[caseTableauCompress] &= ~(1 << numeroBitDansCaseTableauCompress);
 			}
 
-			numeroBitDansTableauCompress--;
+			numeroBitDansCaseTableauCompress--;
 
-			if(numeroBitDansTableauCompress < 0) {
-				numeroBitDansTableauCompress = 7;
+			if(numeroBitDansCaseTableauCompress < 0) {
+				numeroBitDansCaseTableauCompress = 7;
 				caseTableauCompress++;
 			}
 		}
@@ -198,6 +196,40 @@ uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t comp
 	printf("\nContenu compresse : %d, %d, %d\n", compressedText[0], compressedText[1], compressedText[2]);
 
 	return tailleCompresse;
+}
+
+void generateurEntete(uint8_t tabEntete[256], struct noeud* racine, uint16_t tailleFichierCompresse, uint8_t nbrCaractereTotal, uint32_t tabOccurence[256]){
+
+	//Taille du fichier compresse en bits
+	tabEntete[2] = tailleFichierCompresse >> 7 & 0xFF;
+	tabEntete[3] = tailleFichierCompresse & 0xFF;
+
+	//Nombre total de caracteres du fichier d origine
+	tabEntete[4] = nbrCaractereTotal >> 7 & 0xFF;
+	tabEntete[5] = nbrCaractereTotal & 0xFF;
+
+	uint8_t cptCaractere = 0;
+	//Pour chaque caractere
+	for(uint8_t i = 0; i < 255; i++) {
+		if(tabOccurence[i] > 0) {
+			struct noeud* feuilleCaractere = getAdress(racine, i);
+			printf("\nCaractere : %c", feuilleCaractere->c);
+			tabEntete[6+(cptCaractere*3)] = feuilleCaractere->c;
+		    tabEntete[7+(cptCaractere*3)] = feuilleCaractere->code;
+			tabEntete[8+(cptCaractere*3)] = feuilleCaractere->tailleCode;
+			cptCaractere++;
+		}
+	}
+
+	//Taille de l entete en octets
+	uint16_t taille = 6 + (cptCaractere * 3);
+	tabEntete[0] =  taille >> 7 & 0xFF;
+	tabEntete[1] = taille & 0xFF;
+
+	for(uint16_t i = 0; i<taille; i++) {
+		printf("\ntabEntete[%d] = %d", i, tabEntete[i]);
+	}
+
 }
 
 /************************

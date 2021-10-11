@@ -29,3 +29,13 @@ void occurencePrint(uint8_t* chaine, uint32_t tab[256]) {
 	  }
 
 }
+
+uint16_t obtenirNbCarDifferent(uint32_t tab[256]) {
+	uint16_t nbCarDifferent = 0;
+	for(uint8_t i = 0; i < 255; i++) {
+		if(tab[i] > 0) {
+			nbCarDifferent++;
+		}
+	}
+	return nbCarDifferent;
+}
