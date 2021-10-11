@@ -5,7 +5,7 @@ huffman.c:58:6:triArbre	24	static
 huffman.c:71:15:creerRacine	32	static
 huffman.c:108:6:parcourirArbre	16	static
 huffman.c:122:6:creerCode	24	static
-huffman.c:139:15:getAdress	24	static
-huffman.c:165:10:textCompressor	48	static
-huffman.c:201:6:generateurEntete	40	static
-huffman.c:239:17:shiftArbre	24	static
+huffman.c:140:15:getAdress	24	static
+huffman.c:166:10:textCompressor	48	static
+huffman.c:202:6:generateurEntete	40	static
+huffman.c:252:17:shiftArbre	24	static

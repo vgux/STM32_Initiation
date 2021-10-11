@@ -123,7 +123,8 @@ void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
 		ptrNoeud->tailleCode = taille;
 		ptrNoeud->code = code;
-		printf("%c \t code : %d \t taille : %d\n", ptrNoeud->c, ptrNoeud->code, ptrNoeud->tailleCode);
+		printf("\n--------+------------------------------+\n"
+				"%c \t| code : %d \t| taille : %d   |", ptrNoeud->c, ptrNoeud->code, ptrNoeud->tailleCode);
 
 	} else {
 		if(ptrNoeud->gauche) {
@@ -170,7 +171,7 @@ uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t comp
 	while(texte[i] != 0) {
 		adresseCaractere = getAdress(ptrNoeud, texte[i]);
 		tailleCompresse += adresseCaractere->tailleCode;
-		printf("%c", texte[i]);
+		//printf("%c", texte[i]);
 
 		for(int16_t j = (adresseCaractere->tailleCode)-1; j >= 0; j--) {
 			uint8_t codeDecale = (adresseCaractere->code >> j) & 1; //codeDecale vaut 0 ou 1
@@ -209,20 +210,32 @@ void generateurEntete(uint8_t tabEntete[256], struct noeud* racine, uint16_t tai
 	tabEntete[5] = nbrCaractereTotal & 0xFF;
 
 	uint8_t cptCaractere = 0;
+
 	//Pour chaque caractere
+	printf("\n\nCaractere presents dans entete");
 	for(uint8_t i = 0; i < 255; i++) {
 		if(tabOccurence[i] > 0) {
 			struct noeud* feuilleCaractere = getAdress(racine, i);
 			printf("\nCaractere : %c", feuilleCaractere->c);
-			tabEntete[6+(cptCaractere*3)] = feuilleCaractere->c;
-		    tabEntete[7+(cptCaractere*3)] = feuilleCaractere->code;
-			tabEntete[8+(cptCaractere*3)] = feuilleCaractere->tailleCode;
+			//Caractere 1 octet
+			tabEntete[6+(cptCaractere*6)] = feuilleCaractere->c;
+
+			//Code 4 octets
+		    tabEntete[7+(cptCaractere * 6)] = feuilleCaractere->code >> 23 & 0xFF;
+		    tabEntete[8+(cptCaractere * 6)] = feuilleCaractere->code >> 15 & 0xFF;
+		    tabEntete[9+(cptCaractere * 6)] = feuilleCaractere->code >> 7 & 0xFF;
+		    tabEntete[10+(cptCaractere * 6)] = feuilleCaractere->code & 0xFF;
+
+		    //Taille Code 1 octet
+			tabEntete[11+(cptCaractere * 6)] = feuilleCaractere->tailleCode;
+
 			cptCaractere++;
 		}
 	}
+	printf("\n");
 
 	//Taille de l entete en octets
-	uint16_t taille = 6 + (cptCaractere * 3);
+	uint16_t taille = 6 + (cptCaractere * 6);
 	tabEntete[0] =  taille >> 7 & 0xFF;
 	tabEntete[1] = taille & 0xFF;
 
