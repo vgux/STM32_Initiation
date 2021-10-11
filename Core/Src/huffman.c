@@ -73,14 +73,34 @@ struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille) {
 	struct noeud* adresseNoeudPrecedent = arbre[0];
 	struct noeud* adresseNoeud = 0;
 
-	for(i = 1; i < taille; i++) {
+	afficherTabArbreHuffman(arbre, taille);
+
+	do {
+		adresseNoeud = (struct noeud*) malloc(sizeof(struct noeud));
+		adresseNoeud->c = 0;
+		adresseNoeud->occurence = arbre[0]->occurence + arbre[1]->occurence;
+		adresseNoeud->gauche = arbre[0];
+		adresseNoeud->droite = arbre[1];
+
+		arbre[1] = adresseNoeud;
+
+		taille = shiftArbre(arbre, taille);
+
+		triArbre(arbre, taille);
+
+		afficherTabArbreHuffman(arbre, taille);
+
+
+	} while (taille > 1);
+
+	/*for(i = 1; i < taille; i++) {
 		adresseNoeud = (struct noeud*) malloc(sizeof(struct noeud));
 		adresseNoeud->c = 0;
 		adresseNoeud->occurence = adresseNoeudPrecedent->occurence + arbre[i]->occurence;
 		adresseNoeud->gauche = adresseNoeudPrecedent;
 		adresseNoeud->droite = arbre[i];
 		adresseNoeudPrecedent = adresseNoeud;
-	}
+	}*/
 
 	return(adresseNoeud); //retourne l'adresse de la racine
 }
@@ -115,4 +135,14 @@ void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 			creerCode(ptrNoeud->droite, code<<1, taille+1);
 		}
 	}
+}
+
+static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille) {
+	uint16_t i = 0;
+	for(i = 0; i<taille-1; i++) {
+		arbre[i] = arbre[i+1];
+	}
+	arbre[i]=0;
+
+	return (taille-1);
 }

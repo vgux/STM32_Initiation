@@ -28648,6 +28648,7 @@ void triArbre(struct noeud* arbre[256], uint32_t taille);
 struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille);
 void parcourirArbre(struct noeud* ptrNoeud);
 void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille);
+static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille);
 # 42 "../Core/Inc/main.h" 2
 # 60 "../Core/Inc/main.h"
 void Error_Handler(void);
@@ -28752,13 +28753,16 @@ int main(void)
    tailleTableauHuffman = creerFeuille(arbreHuffman, tabCaractere);
    triArbre(arbreHuffman, tailleTableauHuffman);
    afficherTabArbreHuffman (arbreHuffman, tailleTableauHuffman);
+
+   printf("\nCreation racine\n");
+
    racine = creerRacine(arbreHuffman, tailleTableauHuffman);
 
    printf("\nParcours arbre : Affichage caractere et occurence\n");
    parcourirArbre(racine);
 
 
-   creerCode(racine, 0, 1);
+   creerCode(racine, 0, 0);
 
 
 
@@ -28822,7 +28826,7 @@ void SystemClock_Config(void)
 
 static void MX_USART2_UART_Init(void)
 {
-# 221 "../Core/Src/main.c"
+# 224 "../Core/Src/main.c"
   huart2.Instance = ((USART_TypeDef *) (0x40000000UL + 0x4400UL));
   huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = 0x00000000U;

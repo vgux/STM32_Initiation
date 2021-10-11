@@ -140,13 +140,16 @@ int main(void)
 	  tailleTableauHuffman = creerFeuille(arbreHuffman, tabCaractere);
 	  triArbre(arbreHuffman, tailleTableauHuffman);
 	  afficherTabArbreHuffman (arbreHuffman, tailleTableauHuffman);
+
+	  printf("\nCreation racine\n");
+
 	  racine = creerRacine(arbreHuffman, tailleTableauHuffman);
 
 	  printf("\nParcours arbre : Affichage caractere et occurence\n");
 	  parcourirArbre(racine);
 	  //free(arbreHuffman); // a corriger 2.3.6
 
-	  creerCode(racine, 0, 1);
+	  creerCode(racine, 0, 0);
 
 
 
