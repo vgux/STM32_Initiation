@@ -117,7 +117,7 @@ int main(void)
    *****************************************************************************************/
 
 	  occurence(texte, tabCaractere);
-	  occurencePrint(texte, tabCaractere);
+	  occurencePrint(tabCaractere);
 
 	  tailleTableauHuffman = creerFeuille(arbreHuffman, tabCaractere);
 	  triArbre(arbreHuffman, tailleTableauHuffman);
