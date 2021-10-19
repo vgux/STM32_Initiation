@@ -299,6 +299,7 @@ void ledBlinker(void) {
 }
 
 void varSizePrint(void) {
+	  //Affichage de la taille de chaque type de variable
 	  printf("char size = %d\n", sizeof(char));
 	  printf("int size = %d\n", sizeof(int));
 	  printf("unsigned int size = %d\n", sizeof(unsigned int));
@@ -319,7 +320,7 @@ void varSizePrint(void) {
 
 }
 void pointerIncrementPrint(void) {
-
+	  //Opérations sur les pointeurs pour observer le changement dans les adresses pointées
 	  uint8_t *pUint8 = 0;
 	  uint8_t tabUint8[3] = {0};
 	  pUint8 = &tabUint8;
