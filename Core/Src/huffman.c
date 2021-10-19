@@ -13,6 +13,12 @@
 #include <huffman.h>
 #endif
 
+/**
+  * @brief  Initialisation du tableau de Huffman avec chacun des caracteres du texte a compresser
+  * @param  arbre: structure contenant l'adresse des differentes feuilles
+  * @param  tab: Tableau des occurences
+  * @retval caseArbreLib: taille de l'arbre a la fin de l'initialisation
+  */
 uint16_t creerFeuille(struct noeud * arbre[256], uint32_t tab[256]) {
 	uint16_t caseArbreLibre = 0;
 	for(uint16_t i = 0; i < 256; i++) {
@@ -31,6 +37,13 @@ uint16_t creerFeuille(struct noeud * arbre[256], uint32_t tab[256]) {
 	return(caseArbreLibre);
 }
 
+
+/**
+  * @brief  Affichage des caracteristiques de chaque feuille
+  * @param  arbre:  structure contenant l'adresse des differentes feuilles
+  * @param  adresse: adresse de la feuille
+  * @retval None
+  */
 void printFeuille(struct noeud * arbre, uint32_t adresse) {
 	printf("\n\n+-------------------------------+\n");
 	printf("| Adresse \t| %#09x    |\n", adresse);
@@ -45,6 +58,12 @@ void printFeuille(struct noeud * arbre, uint32_t adresse) {
 	printf("+-------------------------------+\n");
 }
 
+/**
+  * @brief  Affichage en totalite du tableau de l'arbre de Huffman
+  * @param  arbre:  structure contenant l'adresse des differentes feuilles
+  * @param  taille: taille du tableau de l'arbre de Huffman
+  * @retval None
+  */
 void afficherTabArbreHuffman (struct noeud* arbre[256], uint32_t taille) {
 	printf("\n\n---------------------------------------------------------------------------------+\n");
 	printf(" Adresse \t | Caractere\t | Occurence\t | Gauche\t | Droite\t |\n");
@@ -55,6 +74,12 @@ void afficherTabArbreHuffman (struct noeud* arbre[256], uint32_t taille) {
 	}
 }
 
+/**
+  * @brief  tri des feuilles / noeuds de l'arbre de maniere croissante
+  * @param  arbre:  structure contenant l'adresse des differentes feuilles
+  * @param  taille: taille du tableau de l'arbre de Huffman
+  * @retval None
+  */
 void triArbre(struct noeud* arbre[256], uint32_t taille) {
   //Tri a bulle par ordre croissant
   for (uint16_t i = 0 ; i < taille-1; i++) {
@@ -68,6 +93,12 @@ void triArbre(struct noeud* arbre[256], uint32_t taille) {
   }
 }
 
+/**
+  * @brief  Simplification de l'arbre de Huffman pour obtenir la racine de cet arbre
+  * @param  arbre:  structure contenant l'adresse des differentes feuilles
+  * @param  taille: taille du tableau de l'arbre de Huffman
+  * @retval adresseNoeud: adresse de la structure racine
+  */
 struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille) {
 	uint16_t i = 0;
 	struct noeud* adresseNoeudPrecedent = arbre[0];
@@ -93,18 +124,14 @@ struct noeud* creerRacine(struct noeud* arbre[256], uint32_t taille) {
 
 	} while (taille > 1);
 
-	/*for(i = 1; i < taille; i++) {
-		adresseNoeud = (struct noeud*) malloc(sizeof(struct noeud));
-		adresseNoeud->c = 0;
-		adresseNoeud->occurence = adresseNoeudPrecedent->occurence + arbre[i]->occurence;
-		adresseNoeud->gauche = adresseNoeudPrecedent;
-		adresseNoeud->droite = arbre[i];
-		adresseNoeudPrecedent = adresseNoeud;
-	}*/
-
 	return(adresseNoeud); //retourne l'adresse de la racine
 }
 
+/**
+  * @brief  Parcours completement l'arbre et affiche le caractere si l'element est une feuille
+  * @param  ptrNoeud: pointeur vers une structure de type noeud
+  * @retval None
+  */
 void parcourirArbre(struct noeud* ptrNoeud) {
 	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
 		printf("\n%c -> %u", ptrNoeud->c, ptrNoeud->occurence);
@@ -119,6 +146,13 @@ void parcourirArbre(struct noeud* ptrNoeud) {
 	}
 }
 
+/**
+  * @brief  Creation du code de chaque caractere afin de realiser la compression ulterieurement
+  * @param  ptrNoeud: pointeur vers une structure de type noeud
+  * @param  code: code de depart
+  * @param  taille: taille du code au depart
+  * @retval None
+  */
 void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 	if(ptrNoeud->gauche == NULL && ptrNoeud->droite == NULL) {
 		ptrNoeud->tailleCode = taille;
@@ -137,6 +171,12 @@ void creerCode(struct noeud* ptrNoeud, uint32_t code, uint32_t taille) {
 	}
 }
 
+/**
+  * @brief  Retourne l'adresse de la feuille ayant le caractere recherche
+  * @param  ptrNoeud: pointeur vers une structure de type noeud
+  * @param  caractere: caractere a trouver
+  * @retval adresseNoeud: adresse du noeud ayant le caractere recherche
+  */
 struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere) {
 	struct noeud* adresseNoeud = 0;
 
@@ -163,6 +203,13 @@ struct noeud* getAdress(struct noeud* ptrNoeud, uint8_t caractere) {
 	}
 }
 
+/**
+  * @brief  Realise la compression du texte
+  * @param  ptrNoeud: pointeur vers la racine (structure noeud)
+  * @param  texte: texte a compresser
+  * @param  compressedText: texte compressé
+  * @retval tailleCompress: taille totale du texte compresse en bits
+  */
 uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t compressedText[256]) {
 
 	uint16_t caseTableauCompress = 0, tailleCompresse = 0, i = 0;
@@ -199,6 +246,15 @@ uint16_t textCompressor(struct noeud* ptrNoeud, uint8_t texte[256], uint8_t comp
 	return tailleCompresse;
 }
 
+/**
+  * @brief  Genere l'entete necessaire pour la decompression
+  * @param  tabEntete: sortie contenant l'entete generee
+  * @param  racine: racine de l'arbre de Huffman
+  * @param  tailleFichierCompresse: taille du texte compressé
+  * @param  nbrCaractereTotal: nombre total de caractere au sein du texte compresse
+  * @param  tabOccurence: Tableau des occurences de chaque caractere
+  * @retval None
+  */
 void generateurEntete(uint8_t tabEntete[256], struct noeud* racine, uint16_t tailleFichierCompresse, uint8_t nbrCaractereTotal, uint32_t tabOccurence[256]){
 
 	//Taille du fichier compresse en bits
@@ -249,6 +305,12 @@ void generateurEntete(uint8_t tabEntete[256], struct noeud* racine, uint16_t tai
  * Fonctions privees	*
  ************************/
 
+/**
+  * @brief  Retire le premier element de l'arbre et decale le reste de l'arbre
+  * @param  arbre: structure contenant l'adresse des differentes feuilles
+  * @param  taille: taille de l'arbre
+  * @retval taille: taille actualisee de l'arbre
+  */
 static uint16_t shiftArbre(struct noeud* arbre[256], uint32_t taille) {
 	uint16_t i = 0;
 	for(i = 0; i<taille-1; i++) {
